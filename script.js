@@ -578,3 +578,99 @@ function initializeWeatherWidget() {
         weatherError.style.display = 'none';
     }
 }
+// Alternative: Open-Meteo API (no API key required)
+async function fetchWeatherData(location) {
+    showLoading(true);
+    hideError();
+    
+    try {
+        // First, get coordinates for the city name using Geocoding API
+        const geoResponse = await fetch(
+            `https://geocoding-api.open-meteo.com/v1/search?name=${location}&count=1&language=en&format=json`
+        );
+        
+        if (!geoResponse.ok) {
+            throw new Error('Failed to find location');
+        }
+        
+        const geoData = await geoResponse.json();
+        
+        if (!geoData.results || geoData.results.length === 0) {
+            throw new Error('City not found');
+        }
+        
+        const { latitude, longitude, name, country } = geoData.results[0];
+        
+        // Fetch weather data from Open-Meteo
+        const weatherResponse = await fetch(
+            `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=relativehumidity_2m,pressure_msl&timezone=auto`
+        );
+        
+        if (!weatherResponse.ok) {
+            throw new Error('Failed to fetch weather data');
+        }
+        
+        const weatherData = await weatherResponse.json();
+        
+        // Format and display the data
+        displayOpenMeteoData({
+            name: name,
+            country: country,
+            current: weatherData.current_weather,
+            hourly: weatherData.hourly,
+            timezone: weatherData.timezone
+        });
+        
+        cityInput.value = name; // Update input with city name
+        
+    } catch (error) {
+        showError(error.message);
+    } finally {
+        showLoading(false);
+    }
+}
+
+function displayOpenMeteoData(data) {
+    cityName.textContent = `${data.name}, ${data.country}`;
+    
+    // Current time
+    const now = new Date();
+    localTime.textContent = now.toLocaleTimeString('en-US', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: true 
+    });
+    
+    // Weather data
+    const weather = data.current;
+    
+    // Map weather codes to icons/descriptions
+    const weatherCodes = {
+        0: { icon: '01d', desc: 'Clear sky' },
+        1: { icon: '02d', desc: 'Mainly clear' },
+        2: { icon: '03d', desc: 'Partly cloudy' },
+        3: { icon: '04d', desc: 'Overcast' },
+        45: { icon: '50d', desc: 'Fog' },
+        48: { icon: '50d', desc: 'Rime fog' },
+        51: { icon: '10d', desc: 'Light drizzle' },
+        61: { icon: '10d', desc: 'Rain' },
+        71: { icon: '13d', desc: 'Snow fall' },
+        95: { icon: '11d', desc: 'Thunderstorm' }
+    };
+    
+    const weatherInfo = weatherCodes[weather.weathercode] || { icon: '03d', desc: 'Unknown' };
+    
+    weatherIcon.src = `https://openweathermap.org/img/wn/${weatherInfo.icon}@2x.png`;
+    weatherDesc.textContent = weatherInfo.desc;
+    temperature.textContent = Math.round(weather.temperature);
+    
+    // Get humidity and pressure from hourly data (closest to current time)
+    const currentHour = new Date().getHours();
+    humidity.innerHTML = `${data.hourly.relativehumidity_2m[currentHour]}<small>%</small>`;
+    pressure.innerHTML = `${Math.round(data.hourly.pressure_msl[currentHour])}<small> hPa</small>`;
+    
+    windSpeed.innerHTML = `${Math.round(weather.windspeed)}<small> km/h</small>`;
+    feelsLike.innerHTML = `${Math.round(weather.temperature)}<small>°C</small>`;
+    
+    weatherCard.style.display = 'block';
+}
