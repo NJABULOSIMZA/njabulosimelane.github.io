@@ -272,3 +272,112 @@ footer {
         margin-top: 0.5rem;
     }
 }
+
+/* Enhanced Notifications for 2026 */
+.notification {
+    position: fixed;
+    top: 100px;
+    right: 2rem;
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border-left: 4px solid #10b981;
+    z-index: 10000;
+    min-width: 320px;
+    animation: slideIn 0.3s ease;
+    overflow: hidden;
+}
+
+.notification.error {
+    border-left-color: #ef4444;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.notification-content button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #6b7280;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+}
+
+.notification-content button:hover {
+    color: #1f2937;
+}
+
+.notification-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: #10b981;
+    animation: progress 5s linear;
+    width: 100%;
+}
+
+.notification.error .notification-progress {
+    background: #ef4444;
+}
+
+@keyframes progress {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+
+.notification.fade-out {
+    animation: fadeOut 0.3s ease forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+/* Typing effect cursor */
+.greeting-badge.typing {
+    border-right: 2px solid white;
+    animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { border-color: white; }
+    51%, 100% { border-color: transparent; }
+}
+
+/* Year highlight */
+.year-2026 .hero {
+    background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .notification {
+        top: auto;
+        bottom: 1rem;
+        right: 1rem;
+        left: 1rem;
+        min-width: auto;
+    }
+}
