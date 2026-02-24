@@ -1,75 +1,547 @@
-<!-- Live Weather Widget - 2026 Interactive Feature -->
-<section class="weather-widget">
-    <div class="container">
-        <h2 class="section-title">
-            Live Weather 
-            <span class="section-badge">Interactive</span>
-        </h2>
-        
-        <div class="weather-container">
-            <!-- Weather Search -->
-            <div class="weather-search">
-                <input type="text" id="cityInput" placeholder="Enter city name (e.g., Johannesburg)" value="Johannesburg">
-                <button id="getWeatherBtn" class="btn btn-primary">
-                    <i class="fas fa-search"></i> Get Weather
-                </button>
-                <button id="currentLocationBtn" class="btn btn-secondary">
-                    <i class="fas fa-location-dot"></i> My Location
-                </button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Njabulo Simelane - IT Support & Network Technician | Class of 2026</title>
+    <link rel="stylesheet" href="stylesheet.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS
+        emailjs.init("LsG3DKFvGTuKnEB3a");
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <h2>Njabulo Simelane <span class="logo-year">'26</span></h2>
             </div>
-            
-            <!-- Weather Display Card -->
-            <div class="weather-card" id="weatherCard" style="display: none;">
-                <div class="weather-header">
-                    <h3 id="cityName">Johannesburg</h3>
-                    <p id="localTime" class="local-time"></p>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="software-developer.html">Dev Journey</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-cta">
+                <span class="current-role">📍 GPLAT Solutions · Feb 2026</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Updated for 2026 -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-text">
+                <div class="hero-greeting">
+                    <span class="greeting-badge">🚀 2026 IT Professional</span>
                 </div>
+                <h1>IT Support & Network Technician</h1>
+                <p class="tagline">Cisco-Certified Professional | Cybersecurity | Problem Solver</p>
+                <p class="hero-description">
+                    <span class="highlight">Currently at GPLAT Solutions</span> providing IT support and help desk services. 
+                    Driven IT technician with hands-on experience in network configuration, cybersecurity, and technical support. 
+                    Certified in CCNA, Ethical Hacking, and Network Troubleshooting with proven ability to maintain secure and 
+                    efficient IT operations.
+                </p>
                 
-                <div class="weather-main">
-                    <div class="weather-icon">
-                        <img id="weatherIcon" src="" alt="Weather icon">
-                        <span id="weatherDesc" class="weather-desc"></span>
+                <!-- 2026 Status Bar -->
+                <div class="status-bar">
+                    <div class="status-item">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Actively working · GPLAT Solutions</span>
                     </div>
-                    <div class="weather-temp">
-                        <span id="temperature"></span>
-                        <span class="temp-unit">°C</span>
+                    <div class="status-item">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Available for opportunities · 2026</span>
                     </div>
                 </div>
-                
-                <div class="weather-details">
-                    <div class="weather-detail-item">
-                        <i class="fas fa-droplet"></i>
-                        <span>Humidity</span>
-                        <strong id="humidity"></strong>
-                    </div>
-                    <div class="weather-detail-item">
-                        <i class="fas fa-wind"></i>
-                        <span>Wind Speed</span>
-                        <strong id="windSpeed"></strong>
-                    </div>
-                    <div class="weather-detail-item">
-                        <i class="fas fa-temperature-low"></i>
-                        <span>Feels Like</span>
-                        <strong id="feelsLike"></strong>
-                    </div>
-                    <div class="weather-detail-item">
-                        <i class="fas fa-compress"></i>
-                        <span>Pressure</span>
-                        <strong id="pressure"></strong>
-                    </div>
+
+                <div class="hero-badges">
+                    <span class="badge">CCNA Certified</span>
+                    <span class="badge">Ethical Hacking</span>
+                    <span class="badge">Network Security</span>
+                    <span class="badge new-badge">Help Desk Pro</span>
                 </div>
-                
-                <!-- Loading Indicator -->
-                <div class="weather-loading" id="weatherLoading">
-                    <i class="fas fa-spinner fa-spin"></i> Fetching weather data...
+
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">Hire Me for 2026</a>
+                    <a href="#projects" class="btn btn-secondary">View Projects</a>
+                    <a href="Njabulo_Simelane_CV_2026.pdf" download class="btn btn-outline">
+                        <i class="fas fa-download"></i> CV 2026
+                    </a>
                 </div>
-                
-                <!-- Error Message -->
-                <div class="weather-error" id="weatherError">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <span id="errorMessage"></span>
+            </div>
+            <div class="hero-image">
+                <img src="Images/profile-pic.png" alt="Njabulo Simelane - 2026">
+                <div class="image-badge">
+                    <span>Active 2026</span>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    <!-- 2026 Quick Stats -->
+    <section class="quick-stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">2026</div>
+                    <div class="stat-label">Current Year</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2+</div>
+                    <div class="stat-label">Years IT Experience</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Cisco Certs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">GPLAT</div>
+                    <div class="stat-label">Current Employer</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Weather Widget - 2026 Interactive Feature -->
+    <section class="weather-widget">
+        <div class="container">
+            <h2 class="section-title">
+                Live Weather 
+                <span class="section-badge">Interactive</span>
+            </h2>
+            
+            <div class="weather-container">
+                <!-- Weather Search -->
+                <div class="weather-search">
+                    <input type="text" id="cityInput" placeholder="Enter city name (e.g., Johannesburg)" value="Johannesburg">
+                    <button id="getWeatherBtn" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Get Weather
+                    </button>
+                    <button id="currentLocationBtn" class="btn btn-secondary">
+                        <i class="fas fa-location-dot"></i> My Location
+                    </button>
+                </div>
+                
+                <!-- Weather Display Card -->
+                <div class="weather-card" id="weatherCard" style="display: none;">
+                    <div class="weather-header">
+                        <h3 id="cityName">Johannesburg</h3>
+                        <p id="localTime" class="local-time"></p>
+                    </div>
+                    
+                    <div class="weather-main">
+                        <div class="weather-icon">
+                            <img id="weatherIcon" src="" alt="Weather icon">
+                            <span id="weatherDesc" class="weather-desc"></span>
+                        </div>
+                        <div class="weather-temp">
+                            <span id="temperature"></span>
+                            <span class="temp-unit">°C</span>
+                        </div>
+                    </div>
+                    
+                    <div class="weather-details">
+                        <div class="weather-detail-item">
+                            <i class="fas fa-droplet"></i>
+                            <span>Humidity</span>
+                            <strong id="humidity"></strong>
+                        </div>
+                        <div class="weather-detail-item">
+                            <i class="fas fa-wind"></i>
+                            <span>Wind Speed</span>
+                            <strong id="windSpeed"></strong>
+                        </div>
+                        <div class="weather-detail-item">
+                            <i class="fas fa-temperature-low"></i>
+                            <span>Feels Like</span>
+                            <strong id="feelsLike"></strong>
+                        </div>
+                        <div class="weather-detail-item">
+                            <i class="fas fa-compress"></i>
+                            <span>Pressure</span>
+                            <strong id="pressure"></strong>
+                        </div>
+                    </div>
+                    
+                    <!-- Loading Indicator -->
+                    <div class="weather-loading" id="weatherLoading">
+                        <i class="fas fa-spinner fa-spin"></i> Fetching weather data...
+                    </div>
+                    
+                    <!-- Error Message -->
+                    <div class="weather-error" id="weatherError">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span id="errorMessage"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section - Updated with both roles -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title">
+                Professional Experience 
+                <span class="section-badge">2024–2026</span>
+            </h2>
+            
+            <!-- Current Role - GPLAT (2026) -->
+            <div class="experience-card current-role-card">
+                <div class="experience-header">
+                    <div class="role-title">
+                        <h3>IT Technician & Help Desk Agent</h3>
+                        <span class="current-badge">Current</span>
+                    </div>
+                    <p class="company">GPLAT Solutions</p>
+                    <p class="duration">February 2026 – Present</p>
+                </div>
+                <div class="experience-details">
+                    <ul>
+                        <li>Deliver first-line technical support and help desk services to resolve hardware, software, and network issues for clients</li>
+                        <li>Diagnose and troubleshoot IT incidents via phone, email, and remote access tools, ensuring timely resolution and user satisfaction</li>
+                        <li>Assist in maintaining and supporting client IT infrastructure, contributing to efficient and secure operations</li>
+                        <li>Document support requests, solutions, and procedures to build a knowledge base for recurring issues</li>
+                        <li>Collaborate with the IT team to escalate and resolve complex technical challenges</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Previous Role - College -->
+            <div class="experience-card">
+                <div class="experience-header">
+                    <h3>IT Technician (WBE)</h3>
+                    <p class="company">Ekurhuleni East TVET College (Main Campus)</p>
+                    <p class="duration">January 2024 – August 2025</p>
+                </div>
+                <div class="experience-details">
+                    <ul>
+                        <li>Delivered first-line support for hardware, software, and network issues across campus</li>
+                        <li>Installed and configured OS, applications, and peripherals on 50+ workstations</li>
+                        <li>Assisted in LAN setup, IP configuration, and switch deployment</li>
+                        <li>Maintained IT asset inventory and technical documentation</li>
+                        <li>Supported lecturers with lab network troubleshooting and secure Wi-Fi access</li>
+                        <li>Resolved support tickets efficiently, boosting system uptime and user satisfaction</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2026 Focus Areas -->
+    <section class="focus-2026">
+        <div class="container">
+            <h2 class="section-title">My 2026 Focus</h2>
+            <div class="focus-grid">
+                <div class="focus-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>Help Desk Excellence</h3>
+                    <p>Delivering top-tier support at GPLAT Solutions</p>
+                    <span class="focus-year">2026 Priority</span>
+                </div>
+                <div class="focus-card">
+                    <i class="fas fa-network-wired"></i>
+                    <h3>Network Security</h3>
+                    <p>Advanced CCNA implementation</p>
+                    <span class="focus-year">Ongoing</span>
+                </div>
+                <div class="focus-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Software Development</h3>
+                    <p>Building programming skills</p>
+                    <span class="focus-year">Growing</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="certifications">
+        <div class="container">
+            <h2 class="section-title">
+                Cisco Certifications 
+                <span class="section-badge">2024–2026</span>
+            </h2>
+            <div class="certs-grid">
+                
+                <div class="cert-card" data-cert="ccna">
+                    <div class="cert-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3>CCNA: Introduction to Networks</h3>
+                    <p class="cert-org">Cisco Networking Academy</p>
+                    <p class="cert-date">Completed: December 2024</p>
+                    <span class="cert-badge">Active · Renewed 2026</span>
+                </div>
+
+                <div class="cert-card" data-cert="ethical-hacking">
+                    <div class="cert-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Ethical Hacker</h3>
+                    <p class="cert-org">Cisco Networking Academy</p>
+                    <p class="cert-date">Completed: July 2025</p>
+                    <span class="cert-badge">Advanced · Current</span>
+                </div>
+
+                <div class="cert-card" data-cert="security">
+                    <div class="cert-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Introduction to Cybersecurity</h3>
+                    <p class="cert-org">Cisco Networking Academy</p>
+                    <p class="cert-date">Completed: March 2024</p>
+                    <span class="cert-badge">Foundation · Active</span>
+                </div>
+
+                <div class="cert-card" data-cert="troubleshooting">
+                    <div class="cert-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <h3>Network Addressing & Troubleshooting</h3>
+                    <p class="cert-org">Cisco Networking Academy</p>
+                    <p class="cert-date">Completed: March 2024</p>
+                    <span class="cert-badge">Core Skill · 2026</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Technical Projects <span class="section-badge">Portfolio 2026</span></h2>
+            
+            <div class="project-filters">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="networking">Networking</button>
+                <button class="filter-btn" data-filter="security">Security</button>
+                <button class="filter-btn" data-filter="support">IT Support</button>
+            </div>
+
+            <div class="projects-grid">
+                
+                <div class="project-card" data-category="networking">
+                    <div class="project-image">
+                        <img src="Images/Lab.jpg" alt="networking ">
+                    </div>
+                    <div class="project-content">
+                        <h3>Enterprise Network Configuration</h3>
+                        <p class="project-tech">Cisco Packet Tracer | Routers | Switches | VLANs</p>
+                        <p>Designed and implemented a secure enterprise network with multiple VLANs and inter-VLAN routing.</p>
+                        <ul class="project-features">
+                            <li>Configured 10+ routers and switches in Cisco Packet Tracer</li>
+                            <li>Implemented VLAN segmentation for security</li>
+                            <li>Set up DHCP and DNS services</li>
+                            <li>Configured ACLs for network security</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="security">
+                    <div class="project-image">
+                   <img src="Images/security-lab.png" alt="Njabulo Simelane">
+                    </div>
+                    <div class="project-content">
+                        <h3>Network Security Hardening</h3>
+                        <p class="project-tech">Firewalls | Access Control | Ethical Hacking</p>
+                        <p>Applied ethical hacking principles to identify vulnerabilities and implement security controls.</p>
+                        <ul class="project-features">
+                            <li>Conducted vulnerability assessments</li>
+                            <li>Configured firewall rules and access control lists</li>
+                            <li>Implemented secure network policies</li>
+                            <li>Performed penetration testing exercises</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="support">
+                    <div class="project-image">
+                        <img src="Images/campus-support.jpg" alt="Campus IT Infrastructure Support">
+                    </div>
+                    <div class="project-content">
+                        <h3>Campus IT Infrastructure Support</h3>
+                        <p class="project-tech">Hardware | Windows OS | Network Troubleshooting</p>
+                        <p>Managed IT support operations for 50+ workstations and network infrastructure.</p>
+                        <ul class="project-features">
+                            <li>Deployed and maintained 50+ Windows workstations</li>
+                            <li>Troubleshoot network connectivity issues</li>
+                            <li>Configured secure Wi-Fi access points</li>
+                            <li>Maintained IT asset documentation</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">Technical Skills <span class="section-badge">2026 Edition</span></h2>
+            
+            <div class="skills-grid">
+                
+                <div class="skill-category">
+                    <h3><i class="fas fa-network-wired"></i> Networking</h3>
+                    <div class="skill-bar">
+                        <span>CCNA Routing & Switching</span>
+                        <div class="progress">
+                            <div class="progress-bar" data-width="85"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span>VLAN Configuration</span>
+                        <div class="progress">
+                            <div class="progress-bar" data-width="80"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span>IP Addressing & Subnetting</span>
+                        <div class="progress">
+                            <div class="progress-bar" data-width="90"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="fas fa-shield-alt"></i> Cybersecurity</h3>
+                    <div class="skill-bar">
+                        <span>Ethical Hacking Principles</span>
+                        <div class="progress">
+                            <div class="progress-bar" data-width="75"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span>Network Security</span>
+                        <div class="progress">
+                            <div class="progress-bar" data-width="80"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span>Firewall Configuration</span>
+                        <div class="progress">
+                            <div class="progress-bar" data-width="70"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="fas fa-headset"></i> Help Desk & Support</h3>
+                    <div class="skill-bar">
+                        <span>Remote Troubleshooting</span>
+                        <div class="progress">
+                            <div class="progress-bar" data-width="85"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span>Ticket Management</span>
+                        <div class="progress">
+                            <div class="progress-bar" data-width="80"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <span>Client Communication</span>
+                        <div class="progress">
+                            <div class="progress-bar" data-width="90"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch <span class="section-badge">2026</span></h2>
+            <div class="contact-grid">
+                
+                <div class="contact-info">
+                    <h3>Ready for 2026 Opportunities</h3>
+                    <p>I'm actively working at GPLAT Solutions and open to connecting about IT roles, networking opportunities, or collaborations.</p>
+                    
+                    <div class="availability-banner">
+                        <i class="fas fa-clock"></i>
+                        <span>Response time: Within 24 hours</span>
+                    </div>
+
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>069 737 4136</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>Njabulosim11@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Ekurhuleni, Gauteng · 2026</span>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/njabulo-simelane-aa163b127/" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://www.credly.com/users/njabulo-simelane" class="social-link">
+                            <i class="fas fa-award"></i>
+                        </a>
+                        <a href="mailto:Njabulosim11@gmail.com" class="social-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="subject" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send Message · 2026
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2026 Njabulo Simelane · IT Support & Network Technician · GPLAT Solutions</p>
+            <p class="footer-updated">Last updated: February 2026 · Weather Widget Active ⛅</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
