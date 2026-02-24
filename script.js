@@ -32,6 +32,9 @@ window.addEventListener('scroll', () => {
             link.classList.add('active');
         }
     });
+
+    // Update current year in stats if needed
+    updateYearHighlights();
 });
 
 // Project filtering
@@ -83,7 +86,11 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.5 });
 
-observer.observe(document.querySelector('.skills'));
+// Observe skills section
+const skillsSection = document.querySelector('.skills');
+if (skillsSection) {
+    observer.observe(skillsSection);
+}
 
 // Back to top button
 const backToTopButton = document.getElementById('backToTop');
@@ -103,16 +110,15 @@ backToTopButton.addEventListener('click', () => {
     });
 });
 
-// Form submission
-// Enhanced Form Submission with EmailJS
+// Form submission with EmailJS
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
     const submitBtn = this.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
     
-    // Show loading state
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    // Show loading state with 2026 flair
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending 2026...';
     submitBtn.disabled = true;
     
     const formData = {
@@ -120,17 +126,20 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
         email: document.getElementById('email').value,
         subject: document.getElementById('subject').value,
         message: document.getElementById('message').value,
-        to_email: 'Njabulosim11@gmail.com' // Your email
+        to_email: 'Njabulosim11@gmail.com',
+        year: '2026',
+        current_role: 'IT Technician at GPLAT Solutions'
     };
     
     // Send via EmailJS
     emailjs.send('service_bc13rq6', 'template_4pd2evg', formData)
         .then(function(response) {
-            showNotification('Message sent successfully! I will get back to you soon.', 'success');
+            showNotification('✅ Message sent successfully! I\'ll respond within 24 hours (2026 speed!', 'success');
             document.getElementById('contactForm').reset();
         })
         .catch(function(error) {
-            showNotification('Sorry, there was an error sending your message. Please email me directly at Njabulosim11@gmail.com', 'error');
+            showNotification('❌ Error sending message. Please email me directly at Njabulosim11@gmail.com', 'error');
+            console.error('EmailJS error:', error);
         })
         .finally(function() {
             // Reset button
@@ -139,13 +148,20 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
         });
 });
 
-// Notification function
+// Notification function with 2026 styling
 function showNotification(message, type) {
+    // Remove any existing notifications
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(notif => notif.remove());
+    
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
     notification.innerHTML = `
-        <span>${message}</span>
-        <button onclick="this.parentElement.remove()">&times;</button>
+        <div class="notification-content">
+            <span>${message}</span>
+            <button onclick="this.parentElement.parentElement.remove()">&times;</button>
+        </div>
+        <div class="notification-progress"></div>
     `;
     
     document.body.appendChild(notification);
@@ -153,7 +169,12 @@ function showNotification(message, type) {
     // Auto remove after 5 seconds
     setTimeout(() => {
         if (notification.parentElement) {
-            notification.remove();
+            notification.classList.add('fade-out');
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 300);
         }
     }, 5000);
 }
@@ -169,13 +190,221 @@ document.querySelectorAll('.cert-card').forEach(card => {
     });
 });
 
-// Initialize animations when page loads
+// 2026 Specific Functions
+
+// Update year highlights across the site
+function updateYearHighlights() {
+    const currentYear = new Date().getFullYear();
+    const yearElements = document.querySelectorAll('.current-year');
+    yearElements.forEach(el => {
+        el.textContent = currentYear;
+    });
+    
+    // Check if we're in 2026
+    if (currentYear === 2026) {
+        document.body.classList.add('year-2026');
+    }
+}
+
+// Animate stats counters
+function animateStats() {
+    const statNumbers = document.querySelectorAll('.stat-number');
+    
+    statNumbers.forEach(stat => {
+        const value = stat.textContent;
+        if (value.includes('+') || value.includes('GPLAT')) return; // Skip non-numeric stats
+        
+        const numericValue = parseInt(value);
+        if (!isNaN(numericValue)) {
+            let start = 0;
+            const increment = numericValue / 50;
+            const timer = setInterval(() => {
+                start += increment;
+                if (start > numericValue) {
+                    stat.textContent = value;
+                    clearInterval(timer);
+                } else {
+                    stat.textContent = Math.floor(start);
+                }
+            }, 20);
+        }
+    });
+}
+
+// Focus cards animation on scroll
+const focusObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }, index * 100);
+        }
+    });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.focus-card').forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    card.style.transition = 'all 0.5s ease';
+    focusObserver.observe(card);
+});
+
+// Add typing effect to hero greeting (optional)
+function typeEffect() {
+    const greeting = document.querySelector('.greeting-badge');
+    if (!greeting) return;
+    
+    const text = greeting.textContent;
+    greeting.textContent = '';
+    greeting.style.width = 'fit-content';
+    greeting.style.borderRight = '2px solid white';
+    
+    let i = 0;
+    const timer = setInterval(() => {
+        if (i < text.length) {
+            greeting.textContent += text.charAt(i);
+            i++;
+        } else {
+            clearInterval(timer);
+            greeting.style.borderRight = 'none';
+        }
+    }, 100);
+}
+
+// Track user engagement with 2026 content
+function trackEngagement() {
+    const timeOnSite = 0;
+    const engagementData = {
+        page: 'IT Portfolio 2026',
+        visits: localStorage.getItem('visits_2026') || 0,
+        lastVisit: localStorage.getItem('last_visit_2026') || new Date().toISOString()
+    };
+    
+    // Update visit count
+    engagementData.visits = parseInt(engagementData.visits) + 1;
+    localStorage.setItem('visits_2026', engagementData.visits);
+    localStorage.setItem('last_visit_2026', new Date().toISOString());
+    
+    // You could send this data to analytics if needed
+    console.log('2026 Portfolio Engagement:', engagementData);
+}
+
+// Add current time greeting
+function updateTimeGreeting() {
+    const hours = new Date().getHours();
+    const greeting = document.querySelector('.greeting-badge');
+    if (!greeting) return;
+    
+    let timeGreeting;
+    if (hours < 12) {
+        timeGreeting = '🌅 Good Morning';
+    } else if (hours < 18) {
+        timeGreeting = '☀️ Good Afternoon';
+    } else {
+        timeGreeting = '🌙 Good Evening';
+    }
+    
+    // Don't override if you prefer the static badge
+    // greeting.textContent = `${timeGreeting} · 2026 IT Pro`;
+}
+
+// Initialize everything when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    // Add loading animation
+    // Initial fade in
     document.body.style.opacity = '0';
     document.body.style.transition = 'opacity 0.5s ease';
     
     setTimeout(() => {
         document.body.style.opacity = '1';
     }, 100);
+    
+    // Initialize all 2026 features
+    updateYearHighlights();
+    animateStats();
+    trackEngagement();
+    updateTimeGreeting();
+    
+    // Optional: Uncomment for typing effect
+    // setTimeout(typeEffect, 500);
+    
+    // Add active class to current year in navigation
+    const yearLink = document.querySelector('a[href="#2026"]');
+    if (yearLink) {
+        yearLink.classList.add('active');
+    }
+    
+    // Add 2026 version marker
+    console.log('🚀 Njabulo Simelane Portfolio 2026 Edition · Loaded successfully');
 });
+
+// Add smooth scroll for 2026 anchor links
+document.querySelectorAll('a[href*="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+        if (this.getAttribute('href').includes('2026')) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').split('#')[1];
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    });
+});
+
+// Handle responsive menu for 2026 (if you add mobile menu)
+window.addEventListener('resize', () => {
+    if (window.innerWidth <= 768) {
+        // Mobile optimizations
+        document.querySelectorAll('.stat-number').forEach(stat => {
+            stat.style.fontSize = '2rem';
+        });
+    } else {
+        document.querySelectorAll('.stat-number').forEach(stat => {
+            stat.style.fontSize = '';
+        });
+    }
+});
+
+// Prefetch CV 2026 (optional)
+function prefetchCV() {
+    const cvLink = document.querySelector('a[href*="CV_2026.pdf"]');
+    if (cvLink) {
+        cvLink.addEventListener('mouseenter', () => {
+            const link = document.createElement('link');
+            link.rel = 'prefetch';
+            link.href = cvLink.getAttribute('href');
+            document.head.appendChild(link);
+        });
+    }
+}
+
+prefetchCV();
+
+// Add keyboard shortcuts for 2026
+document.addEventListener('keydown', (e) => {
+    // Press 'C' to scroll to contact
+    if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
+    }
+    // Press 'P' to scroll to projects
+    if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        document.querySelector('#projects').scrollIntoView({ behavior: 'smooth' });
+    }
+    // Press 'H' for home
+    if (e.key === 'h' || e.key === 'H') {
+        e.preventDefault();
+        document.querySelector('#home').scrollIntoView({ behavior: 'smooth' });
+    }
+});
+
+// Export functions if needed (for module usage)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        animateStats,
+        showNotification,
+        updateYearHighlights
+    };
+}
