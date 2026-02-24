@@ -408,3 +408,173 @@ if (typeof module !== 'undefined' && module.exports) {
         updateYearHighlights
     };
 }
+
+// Weather Widget Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    initializeWeatherWidget();
+});
+
+function initializeWeatherWidget() {
+    const API_KEY = 'YOUR_OPENWEATHERMAP_API_KEY'; // Get free key from https://openweathermap.org/api
+    const weatherCard = document.getElementById('weatherCard');
+    const weatherLoading = document.getElementById('weatherLoading');
+    const weatherError = document.getElementById('weatherError');
+    const errorMessage = document.getElementById('errorMessage');
+    
+    // DOM elements for weather data
+    const cityName = document.getElementById('cityName');
+    const localTime = document.getElementById('localTime');
+    const weatherIcon = document.getElementById('weatherIcon');
+    const weatherDesc = document.getElementById('weatherDesc');
+    const temperature = document.getElementById('temperature');
+    const humidity = document.getElementById('humidity');
+    const windSpeed = document.getElementById('windSpeed');
+    const feelsLike = document.getElementById('feelsLike');
+    const pressure = document.getElementById('pressure');
+    
+    // Search elements
+    const cityInput = document.getElementById('cityInput');
+    const getWeatherBtn = document.getElementById('getWeatherBtn');
+    const currentLocationBtn = document.getElementById('currentLocationBtn');
+    
+    // Load default city on page load
+    fetchWeatherData('Johannesburg');
+    
+    // Event listeners
+    getWeatherBtn.addEventListener('click', () => {
+        const city = cityInput.value.trim();
+        if (city) {
+            fetchWeatherData(city);
+        } else {
+            showError('Please enter a city name');
+        }
+    });
+    
+    cityInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            const city = cityInput.value.trim();
+            if (city) {
+                fetchWeatherData(city);
+            }
+        }
+    });
+    
+    currentLocationBtn.addEventListener('click', getCurrentLocationWeather);
+    
+    // Fetch weather data from OpenWeatherMap API
+    async function fetchWeatherData(location) {
+        showLoading(true);
+        hideError();
+        
+        try {
+            const response = await fetch(
+                `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${API_KEY}`
+            );
+            
+            if (!response.ok) {
+                throw new Error(response.status === 404 ? 'City not found' : 'Failed to fetch weather data');
+            }
+            
+            const data = await response.json();
+            displayWeatherData(data);
+        } catch (error) {
+            showError(error.message);
+        } finally {
+            showLoading(false);
+        }
+    }
+    
+    // Get weather for current location using Geolocation API [citation:1]
+    function getCurrentLocationWeather() {
+        if (!navigator.geolocation) {
+            showError('Geolocation is not supported by your browser');
+            return;
+        }
+        
+        showLoading(true);
+        hideError();
+        
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                try {
+                    const { latitude, longitude } = position.coords;
+                    const response = await fetch(
+                        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`
+                    );
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch weather data');
+                    }
+                    
+                    const data = await response.json();
+                    displayWeatherData(data);
+                    cityInput.value = data.name; // Update input with city name
+                } catch (error) {
+                    showError(error.message);
+                } finally {
+                    showLoading(false);
+                }
+            },
+            (error) => {
+                showError('Unable to retrieve your location. Please enter a city manually.');
+                showLoading(false);
+            }
+        );
+    }
+    
+    // Display weather data in UI
+    function displayWeatherData(data) {
+        // Basic info
+        cityName.textContent = `${data.name}, ${data.sys.country}`;
+        
+        // Local time (calculate from timezone offset)
+        const timezoneOffset = data.timezone; // seconds
+        const localTimeObj = new Date(Date.now() + (timezoneOffset * 1000) + (new Date().getTimezoneOffset() * 60000));
+        localTime.textContent = localTimeObj.toLocaleTimeString('en-US', { 
+            hour: '2-digit', 
+            minute: '2-digit',
+            hour12: true 
+        });
+        
+        // Weather icon and description
+        const iconCode = data.weather[0].icon;
+        weatherIcon.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+        weatherIcon.alt = data.weather[0].description;
+        weatherDesc.textContent = data.weather[0].description;
+        
+        // Temperature
+        temperature.textContent = Math.round(data.main.temp);
+        
+        // Details
+        humidity.innerHTML = `${data.main.humidity}<small>%</small>`;
+        windSpeed.innerHTML = `${Math.round(data.wind.speed * 3.6)}<small> km/h</small>`; // Convert m/s to km/h
+        feelsLike.innerHTML = `${Math.round(data.main.feels_like)}<small>°C</small>`;
+        pressure.innerHTML = `${data.main.pressure}<small> hPa</small>`;
+        
+        // Show weather card
+        weatherCard.style.display = 'block';
+        
+        // Add weather condition class for animations
+        const weatherMain = data.weather[0].main.toLowerCase();
+        weatherCard.className = `weather-card ${weatherMain}`;
+    }
+    
+    // Helper functions
+    function showLoading(show) {
+        weatherLoading.style.display = show ? 'block' : 'none';
+        if (show) {
+            weatherCard.style.display = 'none';
+        }
+    }
+    
+    function showError(message) {
+        errorMessage.textContent = message;
+        weatherError.style.display = 'block';
+        weatherCard.style.display = 'none';
+        weatherLoading.style.display = 'none';
+    }
+    
+    function hideError() {
+        weatherError.style.display = 'none';
+    }
+}
